@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BGTimer HTML</title>
+    <link rel="icon" href="pawn.png" />
+  </head>
+  <body>
+    <header>
+      <h1>BGTimer</h1>
+      <!-- Navigation elements -->
+      <nav>
+        <menu>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="join.html">Join</a></li>
+          <li><a href="game.html">Game</a></li>
+        </menu>
+      </nav>
+      <hr />
+    </header>
+
+    <main>
+      <div class="games">
+        Game: Terraforming Mars
+      </div>
+      <div class="players">
+        Player:
+        <span class="player-name">Mystery player</span>
+      </div>
+      <ul class="notification">
+        <li class="player-name">It's your turn!</li>
+        <li class="player-name">John finished his turn.</li>
+        <li class="player-name">Jacob finished his turn.</li>
+        <li class="player-name">Luke's time is up!</li>
+      </ul>
+
+      <!-- More formatting with old style HTML -->
+      <br />
+
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Name</th>
+            <th>Turn Order</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><img src="crown.png" alt="A crown" width="50"></td>
+            <td><b>Mystery Player</b></td>
+            <td><b>1st</b></td>
+            <td><b>4:35</b></td>
+          </tr>
+          <tr>
+            <td><img src="meeple.png" alt="A meeple icon" width ="50"></td>
+            <td>Luke</td>
+            <td>2nd</td>
+            <td>5:00</td>
+          </tr>
+          <tr>
+            <td><img src="meeple.png" alt="A meeple icon" width ="50"></td>
+            <td>Jacob</td>
+            <td>3rd</td>
+            <td>5:00</td>
+          </tr>
+          <tr>
+            <td><img src="meeple.png" alt="A meeple icon" width ="50"></td>
+            <td>John</td>
+            <td>4th</td>
+            <td>5:00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br />
+
+      <div>
+        <button>Reset</button>
+      </div>
+
+      <br />
+
+      <div>
+        <table>
+          <tr>
+            <td>
+              <button>
+                + Add Player
+              </button>
+            </td>
+            <td>
+              <button>
+                Change Turn Order
+              </button>
+            </td>
+            <td>
+              <button>+</button><input type="text" id="time" value="5:00" readonly /><button>-</button>
+              <br />
+              <br />
+              Change Time
+            </td>
+          </tr>
+          <tr>
+            <td>
+            </td>
+            <td>
+              <button>
+                End Turn
+              </button>
+            </td>
+            <td>
+              <button>
+              Pause Timer
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </main>
+
+    <footer>
+      <hr />
+      <span class="text-reset">Jacob Unalp</span>
+      <br />
+      <a href="https://github.com/JuanotheRito/startup">GitHub</a>
+    </footer>
+  </body>
+</html>
