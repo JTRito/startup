@@ -58,7 +58,7 @@ I am going to use the required technologies in the following ways.
 
 - **HTML** - Utilizes correct HTML structure for application. Page for login, and one for joining a game. Two in total
 - **CSS** - Application styling to look good on both mobile and desktop, clear styling to prioritize UI elements
-- **React** - Change display to game component, displays whose turn it is, displays how much time a use has left
+- **React** - Change display to game component, displays whose turn it is, displays how much time a user has left
 - **Service** - Backend service with endpoints for:
   - login
   - retrieving turn order
