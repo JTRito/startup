@@ -1,6 +1,6 @@
 # CS 260 Notes
 
-[My startup - Simon](https://simon.cs260.click)
+[My startup - BGTimer](https://bgtimer.click)
 
 ## Helpful links
 
@@ -10,8 +10,9 @@
 
 ## AWS
 
-My IP address is: 54.81.96.130
-Launching my AMI I initially put it on a private subnet. Even though it had a public IP address and the security group was right, I wasn't able to connect to it.
+My IP address is: 98.95.212.13
+Didn't have any issues connecting to the server I made through Amazon.
+Route53 worked and I now own the bgtimer.click domain
 
 ## Caddy
 
@@ -19,9 +20,7 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 ## HTML
 
-This was easy. I was careful to use the correct structural elements such as header, footer, main, nav, and form. The links between the three views work great using the `a` element.
-
-The part I didn't like was the duplication of the header and footer code. This is messy, but it will get cleaned up when I get to React.
+Pretty easy overall, had to make 1 more page than I initially thought and had to Google some things but it was pretty intuitive to get how I wanted overall. Obviously only supports structure of the webpage, functionality will come later and is what I am most worried about.
 
 ## CSS
 

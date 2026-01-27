@@ -77,15 +77,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
+- [X] **HTML pages** - I added 3 HTML pages to simulate the functionality of my website
+- [X] **Proper HTML element usage** - All tables and images worked as intended, all buttons work as currently intended.
+- [X] **Links** - I added navigation links at the top of the website and added my GitHub Repository link to the bottom of each HTML page.
+- [X] **Text** - I added several tables that will hold player data later, as well as adding an entire section featuring a particular game.
 - [X] **3rd party API placeholder** - 3rd party API will fetch information on a specific game and display it on the login screen.
 - [X] **Images** - I added a cover of Spirit Island to the Login page as part of a placeholder 3rd party API call. Dynamic images may or may not be a part of the final product. Also added a custom tab image. 
 - [X] **Login placeholder** - Login and Register buttons currently send those who click on it to the Join screen, password field uses standard password "dots" to hide password.
 - [X] **DB data placeholder** - The database will store games currently in progress as well as the players currently playing it.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [X] **WebSocket placeholder** - Websocket will notify players when it is their turn and will notify the players in the game when someone passes their turn or runs out of time.
 
 ## 🚀 CSS deliverable
 
