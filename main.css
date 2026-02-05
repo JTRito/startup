@@ -14,7 +14,6 @@ footer{
 }
 
 main {
-  margin: 0;
   padding-top:1.5em;
   flex: 1 calc(100vh - 110px);
   display: flex;
@@ -57,7 +56,7 @@ footer a {
   border-bottom: solid thin gainsboro;
 }
 
-#game-title{
+#featured-title{
   border-bottom: solid thin gainsboro;
   padding: 0.3em;
 }
