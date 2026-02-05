@@ -13,12 +13,13 @@ footer{
 }
 
 main {
+  padding-top:1.5em;
   flex: 1 calc(100vh - 110px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  padding-top: 80px;
+  padding-bottom: 1em;
 }
 
 menu {
@@ -38,6 +39,33 @@ menu .nav-item{
 
 footer a {
   float: right;
+}
+
+#featured-game{
+  margin-top: 2em;
+}
+
+#featured-header{
+  padding: 0.4em;
+  align-items: center;
+  border-bottom: solid thin gainsboro;
+}
+
+#game-title{
+  border-bottom: solid thin gainsboro;
+  padding: 0.3em;
+}
+
+#picture {
+  display: flex;
+}
+
+#picture img{
+  object-fit: cover;
+}
+
+#game-facts{
+  align-items: justify;
 }
 
 @media (max-height: 600px) {

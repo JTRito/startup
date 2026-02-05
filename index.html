@@ -1,82 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BGTimer HTML</title>
-    <link rel="icon" href="pawn.png" />
 
-    <link rel="stylesheet" href="main.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BGTimer HTML</title>
+  <link rel="icon" href="pawn.png" />
 
-    <!-- Include bootstrap CSS framework -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body class = "bg-light text-dark">
-    <header class = "container-fluid">
-      <!-- Navigation elements -->
-      <nav class = "navbar fixed-top navbar-light bg-light">
-        <a class="navbar-brand" href="#">BGTimer</a>
-        <menu class = "navbar-nav">
-          <li class = "nav-item">
-            <a class = "nav-link active" href="index.html">Home</a>
-          </li>
-          <li class = "nav-item">
-            <a class = "nav-link" href="join.html">Join</a>
-          </li>
-          <li class = "nav-item">
-            <a class = "nav-link" href="game.html">Game</a>
-          </li>
-        </menu>
-      </nav>
-    </header>
+  <link rel="stylesheet" href="main.css" />
 
-    <main class="container-fluid bg-body text-center">
-      <h1>Welcome to BGTimer</h1>
-      <form method="get" action="join.html">
-        <div class = "input-group mb-3">
-          <span class="input-group-text">Email</span>
-          <input class="form-control" type="text" placeholder="your@email.com" />
+  <!-- Include bootstrap CSS framework -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+</head>
+
+<body class="bg-light text-dark">
+  <header class="container-fluid">
+    <!-- Navigation elements -->
+    <nav class="navbar fixed-top navbar-light bg-light">
+      <a class="navbar-brand" href="#">BGTimer</a>
+      <menu class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="join.html">Join</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="game.html">Game</a>
+        </li>
+      </menu>
+    </nav>
+  </header>
+
+  <main class="container-fluid bg-body text-center">
+    <h1>Welcome to BGTimer</h1>
+    <form method="get" action="join.html">
+      <div class="input-group mb-3">
+        <span class="input-group-text">Email</span>
+        <input class="form-control" type="text" placeholder="your@email.com" />
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text">Password</span>
+        <input class="form-control" type="password" placeholder="password" />
+      </div>
+      <button class="btn btn-primary" type="submit">Login</button>
+      <button class="btn btn-secondary" type="submit">Register</button>
+    </form>
+
+    <div class="card mb-3" id="featured-game">
+      <div class="row g-0">
+        <div id="picture" class="col-md-4">
+          <img src="spirit_island.webp" class="img-fluid rounded-start" alt="Cover of Spirit Island">
         </div>
-        <div class="input-group mb-3">
-          <span class="input-group-text">Password</span>
-          <input class="form-control" type="password" placeholder="password" />
-        </div>
-        <button class="btn btn-primary" type="submit">Login</button>
-        <button class="btn btn-secondary" type="submit">Register</button>
-      </form>
-      
-      <div class="card" id = "featured-game">
-        <h2 class="card-header">Featured Game: Spirit Island</h2>
-        <div id="picture" class="picture-box">
-         <img src="spirit_island.webp" alt="Cover of Spirit Island" width = "200">
-        </div>
-        <div id = "game-facts">
-          <p>
-            <b>BGG Ranking: 11</b><br>
-            <b>BGG Rating: 8.3</b><br>
-            <b>Type: Co-op Strategy</b><br>
-            <b>Player Count: 1 - 4</b><br>
-            <b>Best At: 2</b><br>
-            <b>Play Time: 90 - 120 Min</b><br>
-            <b>Recommended Age: 14+</b><br>
-            <b>Complexity Rating: Very High</b>
-          </p>
+        <div class="col-md-8 d-flex flex-column">
+          <div id="featured-header" class="bg-light">
+            <h2><b>Featured Game</b></h2>
+          </div>
+          <div id="game-title">
+            <h3><b>Spirit Island</b></h3>
+          </div>
+          <ol class="justify-content-between mb-0 d-flex flex-column flex-grow-1 list-unstyled py-3" id="game-facts">
+            <li><b>BGG Ranking: 11</b></li>
+            <li><b>BGG Rating: 8.3</b><br></li>
+            <li><b>Type: Co-op Strategy</b><br></li>
+            <li><b>Player Count: 1 - 4</b><br></li>
+            <li><b>Best At: 2</b><br></li>
+            <li><b>Play Time: 90 - 120 Min</b><br></li>
+            <li><b>Recommended Age: 14+</b><br></li>
+            <li><b>Complexity Rating: Very High</b></li>
         </div>
       </div>
+    </div>
+    </div>
 
-      
-    </main>
 
-    <footer>
-      <div class="container-fluid">
-        <span class="text-reset">Jacob Unalp</span>
-        <a class="text-reset" href="https://github.com/JuanotheRito/startup">GitHub</a>
-      </div>
-    </footer>
-  </body>
+  </main>
+
+  <footer>
+    <div class="container-fluid">
+      <span class="text-reset">Jacob Unalp</span>
+      <a class="text-reset" href="https://github.com/JuanotheRito/startup">GitHub</a>
+    </div>
+  </footer>
+</body>
+
 </html>
