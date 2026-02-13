@@ -101,9 +101,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Bundled using Vite** - I did not complete this part of the deliverable.
-- [ ] **Components** - I did not complete this part of the deliverable.
-- [ ] **Router** - I did not complete this part of the deliverable.
+- [X] **Bundled using Vite** - I used Vite to test the webpage before deployment, and used the provided deployReact.sh script
+- [X] **Components** - I ported all of my website to use React routing and each page is represented as a React component
+- [X] **Router** - React routing is used in the navigation of the page, and every page is routed to in app.jsx
 
 ## 🚀 React part 2: Reactivity deliverable
 
