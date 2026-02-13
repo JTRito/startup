@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 .player2{
-    color: red
+    color: red !important
 }
 .player3{
-    color: darkblue
+    color: darkblue !important
 }
 .player4{
-    color:green
+    color:green !important
 }
 
 .player-name{
-    color: blue
+    color: blue !important
 }
 
 .players{
@@ -30,7 +30,7 @@
     margin-bottom: 0.5em;
 }
 
-main {
+#gameState {
   padding-top:1.5em;
   flex: 1 calc(100vh - 110px);
   display: flex;

@@ -1,15 +1,15 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './game.css'
+import './game.css';
 
 export function Game() {
     return (
-        <main className="container-fluid bg-body">
+        <main id = "gameState" className="container-fluid bg-body">
             <div className="d-flex justify-content-start pt-3">
                 <div className="players text-start">
                     <span className="current-player d-block">
                         Player:
-                        <span className="player-name">Mystery Player</span>
+                        <span className="player-name"> Mystery Player</span>
                     </span>
 
                     <ul className="notification list-unstyled mb-0">
