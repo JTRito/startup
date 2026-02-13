@@ -1,4 +1,5 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './game.css'
 
 export function Game() {
@@ -20,7 +21,7 @@ export function Game() {
                 </div>
             </div>
             <div className="game h3 my-4 text-center">
-                Game: <span id="game-title" font="Roboto">Terraforming Mars</span>
+                Game: <span id="game-title" style={{ fontFamily: 'Roboto' }}>Terraforming Mars</span>
             </div>
             <table className="table table-striped-columns table-body">
                 <thead>
@@ -73,7 +74,7 @@ export function Game() {
                     <button className="btn btn-danger btn-sm mt-5 mb-3">Pause Timer</button>
                     <div className="input-group">
                         <button className="btn btn-primary btn-sm">+</button>
-                        <input type="text" id="time" value="5:00" readOnly className="form-control text-center" style="width: 80px;" />
+                        <input type="text" id="time" value="5:00" readOnly className="form-control text-center" style={{ width: '80px' }} />
                         <button className="btn btn-primary btn-sm">-</button>
                     </div>
                     <small className="d-block mt-1">Change Time</small>

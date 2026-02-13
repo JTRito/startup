@@ -22,7 +22,7 @@ export default function App() {
                             <NavLink className="nav-link" to="join">Join</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link active" to="game">Game</NavLink>
+                            <NavLink className="nav-link" to="game">Game</NavLink>
                         </li>
                     </menu>
                 </nav>
