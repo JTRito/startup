@@ -6,9 +6,14 @@ import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
 import { Join } from './join/join';
 import { Game } from './game/game';
+import { AuthState } from './login/authState';
 
 
 export default function App() {
+    const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+    const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+    const [authState, setAuthState] = React.useState(currentAuthState);
+
     return <BrowserRouter>
         <div className="body bg-light text-dark">
             <header className="container-fluid bg-body">
@@ -18,12 +23,20 @@ export default function App() {
                         <li className="nav-item">
                             <NavLink className="nav-link" to="">Home</NavLink>
                         </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="join">Join</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="game">Game</NavLink>
-                        </li>
+                        {authState === AuthState.Authenticated && (
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="join">
+                                    Join
+                                </NavLink>
+                            </li>
+                        )}
+                        {authState === AuthState.Authenticated && (
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="game">
+                                    Game
+                                </NavLink>
+                            </li>
+                        )}
                     </menu>
                 </nav>
             </header>
@@ -47,5 +60,6 @@ export default function App() {
 }
 
 function NotFound() {
-  return <main className="container-fluid bg-body text-center">404: Return to sender. Address unknown.</main>;
+    return <main className="container-fluid bg-body text-center">404: Return to sender. Address unknown.</main>;
 }
+
