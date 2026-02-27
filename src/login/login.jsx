@@ -1,22 +1,24 @@
 import React from 'react';
 
-export function Login() {
+import { Unauthenticated } from './unauthenticated';
+import { Authenticated } from './authenticated';
+import { AuthState } from './authState';
+
+export function Login({ userName, authState, onAuthChange}) {
   return (
     <main className="container-fluid bg-body text-center">
-      <h1>Welcome to BGTimer</h1>
-      <form method="get" action="join">
-        <div className="input-group mb-3">
-          <span className="input-group-text">Email</span>
-          <input className="form-control" type="text" placeholder="your@email.com" />
-        </div>
-        <div className="input-group mb-3">
-          <span className="input-group-text">Password</span>
-          <input className="form-control" type="password" placeholder="password" />
-        </div>
-        <button className="btn btn-primary" type="submit">Login</button>
-        <button className="btn btn-secondary" type="submit">Register</button>
-      </form>
-
+      {authState !== AuthState.Unknown && <h1>Welcome to BGTimer</h1>}
+      {authState === AuthState.Authenticated && (
+        <Authenticated userName={userName} onLogout={() => onAuthChange(userName, AuthState.Unauthenticated)} />
+      )}
+      {authState === AuthState.Unauthenticated && (
+        <Unauthenticated
+          userName={userName}
+          onLogin={(loginUserName) => {
+            onAuthChange(loginUserName, AuthState.Authenticated);
+          }}
+        />
+      )}
       <div className="card mb-3" id="featured-game">
         <div className="row g-0">
           <div id="picture" className="col-md-4">
