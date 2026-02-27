@@ -42,7 +42,14 @@ export default function App() {
             </header>
 
             <Routes>
-                <Route path='/' element={<Login />} exact />
+                <Route path='/' element={<Login 
+                    userName={userName}
+                    authState={authState}
+                    onAuthChange={(userName, authState) => {
+                        setAuthState(authState);
+                        setUserName(userName);
+                    }}
+                />} exact />
                 <Route path='/game' element={<Game />} />
                 <Route path='/join' element={<Join />} />
                 <Route path='*' element={<NotFound />} />
