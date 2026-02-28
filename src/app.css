@@ -16,6 +16,7 @@ footer{
 .button{
   margin-left: 0.5em;
 }
+
 main {
   padding-top:1.5em;
   flex: 1 calc(100vh - 110px);
