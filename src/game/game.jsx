@@ -2,14 +2,14 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './game.css';
 
-export function Game() {
+export function Game({userName}) {
     return (
         <main id = "gameState" className="container-fluid bg-body">
             <div className="d-flex justify-content-start pt-3">
                 <div className="players text-start">
                     <span className="current-player d-block">
                         Player:
-                        <span className="player-name"> Mystery Player</span>
+                        <span className="player-name">{userName.split('@')[0]}</span>
                     </span>
 
                     <ul className="notification list-unstyled mb-0">
@@ -35,7 +35,7 @@ export function Game() {
                 <tbody>
                     <tr>
 
-                        <td className="player-name"><b>Mystery Player</b></td>
+                        <td className="player-name"><b>{userName.split('@')[0]}</b></td>
                         <td><b>1st</b></td>
                         <td><b>4:35</b></td>
                     </tr>

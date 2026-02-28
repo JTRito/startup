@@ -50,7 +50,7 @@ export default function App() {
                         setUserName(userName);
                     }}
                 />} exact />
-                <Route path='/game' element={<Game />} />
+                <Route path='/game' element={<Game userName={userName}/>} />
                 <Route path='/join' element={<Join userName={userName}/>} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
