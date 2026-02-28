@@ -109,8 +109,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [X] **All functionality implemented or mocked out** - Most functionality is complete or mocked out. However, I unfortunately did not have time to implement the timer controls, the turn order, or turn order notification mocks. These will be completed before the due date of the next deliverable.
+- [X] **Hooks** - Most React functionality on pages that utilize React use the setState and useEffect hooks. 
 
 ## 🚀 Service deliverable
 
