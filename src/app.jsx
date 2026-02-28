@@ -51,7 +51,7 @@ export default function App() {
                     }}
                 />} exact />
                 <Route path='/game' element={<Game />} />
-                <Route path='/join' element={<Join />} />
+                <Route path='/join' element={<Join userName={userName}/>} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
 
