@@ -1,10 +1,12 @@
 import React from 'react';
 import './join.css';
 
+import Button from 'react-bootstrap/Button'
+import { Create } from './create';
 import { Player } from './player';
 import { Open } from './open';
 
-export function Join() {
+export function Join( {userName}) {
   const [games, setGames] = React.useState([]);
 
   React.useEffect(() => {
@@ -38,6 +40,7 @@ export function Join() {
           {playerDisplay[1]}
           {playerDisplay[2]}
           {playerDisplay[3]}
+
         </tr>
       );
 
@@ -45,12 +48,13 @@ export function Join() {
   } else {
     gameRows.push(
       <tr key = '0'>
-        <td colSpan = '4'>There are no currently active games. Why not create one?</td>
+        <td colSpan = '6'>There are no currently active games. Why not create one?</td>
       </tr>
     );
   }
   return (
     <main className="container-fluid bg-body text-center">
+      <Create/>
       <table className="table table-striped-columns table-body">
         <thead className="table-light">
           <tr>
