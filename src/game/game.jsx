@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './game.css';
+import { Timer } from './timer';
 
 export function Game({userName}) {
     return (
@@ -37,7 +38,7 @@ export function Game({userName}) {
 
                         <td className="player-name"><b>{userName.split('@')[0]}</b></td>
                         <td><b>1st</b></td>
-                        <td><b>4:35</b></td>
+                        <Timer seconds={60*5}/>
                     </tr>
                     <tr>
                         <td className="player2">Luke</td>

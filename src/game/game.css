@@ -12,7 +12,9 @@
 .player-name{
     color: blue !important
 }
-
+.negative-time{
+    color: red !important
+}
 .players{
     text-align: start
 }
