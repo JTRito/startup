@@ -19,6 +19,8 @@ export class Lobby {
         for (const player of this.players) {
             if (player && typeof player.setTime === 'function') {
                 player.setTime(time);
+            } else {
+                console.log("failed to set time for a player")
             }
         }
     }

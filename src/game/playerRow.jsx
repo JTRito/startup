@@ -2,11 +2,8 @@ import React from 'react';
 import { Timer } from './timer';
 
 export function PlayerRow(props) {
-    const [playerName, setPlayerName] = React.useState(props.playerName);
-    const [activePlayer, setActivePlayer] = React.useState(props.activePlayer);
-    const [turnOrder, setTurnOrder] = React.useState(props.turnOrder);
-    const [time, setTime] = React.useState(props.time);
-    const [playerNum, setPlayerNum] = React.useState(props.num);
+    
+    const {playerName, activePlayer, turnOrder, time, playerNum} = props;
 
     const formatPlayerNum = (i) => {
         if (i === 1) {

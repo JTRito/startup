@@ -6,8 +6,12 @@ import { Player } from '../join/player';
 import { Timer } from './timer';
 import { Lobby } from '../join/lobby';
 import Button from 'react-bootstrap/Button'
+import { TimeChanger } from './timeChanger';
 
 export function Game({ userName, currentGame, onGameChange }) {
+
+    const [time, setTime] = React.useState((60 * 5));
+
     React.useEffect(() => {
         const currentGameText = localStorage.getItem('currentGame');
         if (currentGameText) {
@@ -32,7 +36,9 @@ export function Game({ userName, currentGame, onGameChange }) {
         )
     }
 
-    let time = 60 * 5;
+    const changeTime = (newTime) => {setTime(newTime)}
+
+    
     const playerArray = [];
     let user = new Player(null, null);
     let color = null;
@@ -44,14 +50,16 @@ export function Game({ userName, currentGame, onGameChange }) {
     if (currentGame && Array.isArray(currentGame.players)) {
         for (const player of currentGame.players) {
             if (player) {
+                player.setTime(time);
                 playerArray.push(player);
             }
         }
-        currentGame.setTime(time);
         user = playerArray.find(obj => obj.name === userName);
         color = user.formatPlayerNum()
     }
     //End of Placeholder
+
+
 
     const displayAll = (a) => {
         const out = []
@@ -126,20 +134,8 @@ export function Game({ userName, currentGame, onGameChange }) {
                         onClick={() => null}
                     >Set Turn Order</Button>
                 </div>
-                <div className="text-center d-flex justify-content-center flex-column">
-                    
 
-                    <div className="input-group">
-                        <Button className="Button" variant="primary" size="sm">+</Button>
-                        <input type="text" id="time" value="5:00" readOnly className="form-control text-center" style={{ width: '80px' }} />
-                        <Button className="Button" variant='primary' size='sm'>-</Button>
-                    </div>
-                    <Button className="Button d-block mt-1"
-                        variant='primary'
-                        size='sm'
-                        onClick={() => null}>
-                        Change Time</Button>
-                </div>
+                <TimeChanger time={time} onSubmit={(i) => changeTime(i)} />
             </div>
 
         </main >

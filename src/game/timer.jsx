@@ -16,6 +16,10 @@ export function Timer(props) {
         return () => clearInterval(interval);
     }, [isActive, seconds]);
 
+    React.useEffect(() => {
+        setSeconds(props.seconds);
+    }, [props.seconds]);
+
     const format = (totalSeconds) => {
         const isNegative = totalSeconds < 0;
         const absSeconds = Math.abs(totalSeconds);

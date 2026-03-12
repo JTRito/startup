@@ -37,6 +37,6 @@ export class Player {
     }
 
     display() {
-        return (<PlayerRow playerName={this.name} activePlayer={this.active} turnOrder={this.turnOrder} time={this.time} num={this.num}/>)
+        return (<PlayerRow key={this.name} playerName={this.name} activePlayer={this.active} turnOrder={this.turnOrder} time={this.time} num={this.num}/>)
     }
 }
