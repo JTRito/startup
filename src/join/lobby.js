@@ -1,7 +1,7 @@
 import { Player } from "./player"
 
-export class Game {
-    
+export class Lobby {
+
     constructor(name, max) {
         this.name = name;
         this.max = max;
@@ -10,8 +10,16 @@ export class Game {
     }
 
     joinGame(userName) {
-        const player = new Player(userName);
+        const player = new Player(userName, this.playerCount + 1);
         this.players[this.playerCount] = player;
         this.playerCount += 1;
+    }
+
+    setTime(time) {
+        for (const player of this.players) {
+            if (player && typeof player.setTime === 'function') {
+                player.setTime(time);
+            }
+        }
     }
 }

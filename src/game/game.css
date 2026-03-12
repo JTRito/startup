@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-.player2{
+.player-two{
     color: red !important
 }
-.player3{
-    color: darkblue !important
+.player-three{
+    color:  green !important
 }
-.player4{
-    color:green !important
+.player-four{
+    color:darkorange !important
 }
 
-.player-name{
+.player-one{
     color: blue !important
 }
 .negative-time{
@@ -17,6 +17,10 @@
 }
 .players{
     text-align: start
+}
+
+.time-notification{
+    color: red !important
 }
 
 .game{

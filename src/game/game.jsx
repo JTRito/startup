@@ -1,23 +1,85 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './game.css';
+import { PlayerRow } from './playerRow';
+import { Player } from '../join/player';
 import { Timer } from './timer';
+import { Lobby } from '../join/lobby';
+import Button from 'react-bootstrap/Button'
 
-export function Game({userName}) {
+export function Game({ userName, currentGame, onGameChange }) {
+    React.useEffect(() => {
+        const currentGameText = localStorage.getItem('currentGame');
+        if (currentGameText) {
+            const g = JSON.parse(currentGameText);
+            const realGame = new Lobby(g.name, g.max);
+            realGame.players = Array.isArray(g.players)
+                ? g.players.map(p => p ? new Player(p.name, p.num) : null)
+                : new Array(g.max).fill(null);
+            realGame.playerCount = g.playerCount;
+
+            onGameChange(realGame);
+        }
+    }, []);
+
+    if (!currentGame) {
+        return (
+            <main id="gameState" className="container-fluid bg-body">
+                <div className="game h3 my-4 text-center">
+                    <b>You aren't currently part of a game. Join one to get started!</b>
+                </div>
+            </main>
+        )
+    }
+
+    let time = 60 * 5;
+    const playerArray = [];
+    let user = new Player(null, null);
+    let color = null;
+    let gameStart = false;
+    let currentPlayer = null;
+    let nextPlayer = null;
+
+    //Placeholder Code for testing
+    if (currentGame && Array.isArray(currentGame.players)) {
+        for (const player of currentGame.players) {
+            if (player) {
+                playerArray.push(player);
+            }
+        }
+        currentGame.setTime(time);
+        user = playerArray.find(obj => obj.name === userName);
+        color = user.formatPlayerNum()
+    }
+    //End of Placeholder
+
+    const displayAll = (a) => {
+        const out = []
+        for (const obj of a) {
+            out.push(obj.display());
+        }
+        return out;
+    }
+
+    const startGame = () => {
+
+    }
+
+
     return (
-        <main id = "gameState" className="container-fluid bg-body">
+        <main id="gameState" className="container-fluid bg-body">
             <div className="d-flex justify-content-start pt-3">
                 <div className="players text-start">
                     <span className="current-player d-block">
                         Player:
-                        <span className="player-name">{userName.split('@')[0]}</span>
+                        <span className={color}>{userName.split('@')[0]}</span>
                     </span>
 
                     <ul className="notification list-unstyled mb-0">
                         <li className="turn-notification"><b>It's your turn!</b></li>
-                        <li className="pass-notification"><span className="player4">John</span> finished his turn.</li>
-                        <li className="pass-notification"><span className="player3">Jacob</span> finished his turn.</li>
-                        <li className="time-notification"><span className="player2">Luke's</span> time is up!</li>
+                        <li className="pass-notification"><span className="player-four">John</span> finished his turn.</li>
+                        <li className="pass-notification"><span className="player-three">Jacob</span> finished his turn.</li>
+                        <li className="time-notification"><span className="player-two">Luke's</span> time is up!</li>
                     </ul>
                 </div>
             </div>
@@ -34,29 +96,7 @@ export function Game({userName}) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-
-                        <td className="player-name"><b>{userName.split('@')[0]}</b></td>
-                        <td><b>1st</b></td>
-                        <Timer seconds={60*5}/>
-                    </tr>
-                    <tr>
-                        <td className="player2">Luke</td>
-                        <td>2nd</td>
-                        <td>5:00</td>
-                    </tr>
-                    <tr>
-
-                        <td className="player3">Jacob</td>
-                        <td>3rd</td>
-                        <td>5:00</td>
-                    </tr>
-                    <tr>
-
-                        <td className="player4">John</td>
-                        <td>4th</td>
-                        <td>5:00</td>
-                    </tr>
+                    {displayAll(playerArray)}
                 </tbody>
             </table>
 
@@ -65,24 +105,44 @@ export function Game({userName}) {
 
             <div className="controls-container d-flex flex-row align-items-center justify-content-center gap-5">
                 <div className="d-flex justify-content-center gap-3 mt-4 flex-column">
-                    <button type="button" className="btn btn-info btn-sm">+ Add Player</button>
+                    <Button className="Button mt-5 mb-3"
+                        variant='danger'
+                        size='m'
+                        onClick={() => null}
+                    >Pause Game</Button>
                 </div>
                 <div className="d-flex justify-content-center gap-4 mt-4 flex-column">
-                    <button className="btn btn-primary w-100 py-3 btn-lg fw-bold btn-lg ms-auto">End Turn</button>
-                    <button className="btn btn-success btn-sm">Change Turn Order</button>
+
+                    <Button className="Button w-100 py-3 fw-bold ms-auto"
+                        variant='primary'
+                        size='lg'
+                        onClick={() => null}
+                    >
+                        {gameStart ? 'End Turn' : 'Start Game'}
+                    </Button>
+                    <Button className="Button"
+                        variant='success'
+                        size='sm'
+                        onClick={() => null}
+                    >Set Turn Order</Button>
                 </div>
                 <div className="text-center d-flex justify-content-center flex-column">
-                    <button className="btn btn-danger btn-sm mt-5 mb-3">Pause Timer</button>
+                    
+
                     <div className="input-group">
-                        <button className="btn btn-primary btn-sm">+</button>
+                        <Button className="Button" variant="primary" size="sm">+</Button>
                         <input type="text" id="time" value="5:00" readOnly className="form-control text-center" style={{ width: '80px' }} />
-                        <button className="btn btn-primary btn-sm">-</button>
+                        <Button className="Button" variant='primary' size='sm'>-</Button>
                     </div>
-                    <small className="d-block mt-1">Change Time</small>
+                    <Button className="Button d-block mt-1"
+                        variant='primary'
+                        size='sm'
+                        onClick={() => null}>
+                        Change Time</Button>
                 </div>
             </div>
 
         </main >
 
-  );
+    );
 }

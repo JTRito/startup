@@ -2,19 +2,21 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './join.css';
 
-import { Game } from './game';
+import { Lobby } from './lobby';
 import Button from 'react-bootstrap/Button'
 import { Create } from './create';
 import { Player } from './player';
 import { Open } from './open';
 
-export function Join({ userName }) {
+export function Join({ userName, onGameChange}) {
   const [games, setGames] = React.useState([]);
   const navigate = useNavigate();
 
   function resetGames() {
     localStorage.removeItem('games');
+    localStorage.removeItem('currentGame');
     setGames([]);
+    onGameChange("");
   }
 
   function joinCurrentGame(game){
@@ -24,19 +26,29 @@ export function Join({ userName }) {
     setGames(updatedGames);
 
     localStorage.setItem('games', JSON.stringify(updatedGames));
+    localStorage.setItem('currentGame', JSON.stringify(game))
+
+    onGameChange(game);
 
     navigate('/game');
   }
 
   function createGame(gameName, playerCount) {
-    const game = new Game(gameName, playerCount);
+    const game = new Lobby(gameName, playerCount);
+
     game.joinGame(userName);
+    game.joinGame("Luke");
+    game.joinGame("Jacob");
+    game.joinGame("John");
 
     const newGamesList = [...games, game];
     setGames(newGamesList);
 
     const jsonGames = JSON.stringify(newGamesList);
     localStorage.setItem('games', jsonGames);
+    localStorage.setItem('currentGame', JSON.stringify(game));
+
+    onGameChange(game);
     navigate('/game');
   }
 
@@ -45,12 +57,23 @@ export function Join({ userName }) {
     if (gamesText) {
       const plainGames = JSON.parse(gamesText);
       const realGames = plainGames.map(g => {
-        const gameInstance = new Game(g.name, g.max);
-        gameInstance.players = g.players;
+        const gameInstance = new Lobby(g.name, g.max);
+        gameInstance.players = g.players.map(p => p ? new Player(p.name, p.num) : null);
         gameInstance.playerCount = g.playerCount;
         return gameInstance;
       })
       setGames(realGames);
+    }
+    const currentGameText = localStorage.getItem('currentGame');
+    if (currentGameText) {
+      const g = JSON.parse(currentGameText);
+      const realGame = new Lobby(g.name, g.max);
+      realGame.players = Array.isArray(g.players) 
+        ? g.players.map(p => p ? new Player(p.name, p.num) : null)
+        : new Array(g.max).fill(null);
+      realGame.playerCount = g.playerCount;
+
+      onGameChange(realGame);
     }
   }, []);
 

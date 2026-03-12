@@ -13,6 +13,7 @@ export default function App() {
     const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
     const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = React.useState(currentAuthState);
+    const [currentGame, setCurrentGame] = React.useState(localStorage.getItem('currentGame'));
 
     return <BrowserRouter>
         <div className="body bg-light text-dark">
@@ -42,7 +43,7 @@ export default function App() {
             </header>
 
             <Routes>
-                <Route path='/' element={<Login 
+                <Route path='/' element={<Login
                     userName={userName}
                     authState={authState}
                     onAuthChange={(userName, authState) => {
@@ -50,8 +51,19 @@ export default function App() {
                         setUserName(userName);
                     }}
                 />} exact />
-                <Route path='/game' element={<Game userName={userName}/>} />
-                <Route path='/join' element={<Join userName={userName}/>} />
+                <Route path='/game' element={<Game
+                    userName={userName}
+                    currentGame={currentGame}
+                    onGameChange={(currentGame) => {
+                        setCurrentGame(currentGame);
+                    }}
+                />} />
+                <Route path='/join' element={<Join
+                    userName={userName}
+                    onGameChange={(currentGame) => {
+                        setCurrentGame(currentGame);
+                    }}
+                />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
 
