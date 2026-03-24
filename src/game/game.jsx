@@ -7,12 +7,60 @@ import { Timer } from './timer';
 import { Lobby } from '../join/lobby';
 import Button from 'react-bootstrap/Button'
 import { TimeChanger } from './timeChanger';
+import { TurnChanger } from './turnChanger';
+import { PlayerDisplay } from './playerDisplay';
 
 export function Game({ userName, currentGame, onGameChange }) {
 
     const [time, setTime] = React.useState((60 * 5));
+    const [refcount, refresh] = React.useState(0);
+     
+    let turnOrderArray = new Array(4)
+
+    const formatTurnOrder = (t) => {
+        let result = 0;
+
+        if (t === "1st") {
+            result = 1;
+        }
+        if (t === "2nd") {
+            result = 2;
+        }
+        if (t === "3rd") {
+            result = 3;
+        }
+        if (t === "4th") {
+            result = 4;
+        }
+
+        return result;
+    }
+
+    const rehydrate = (na, nu, t) => {
+        const player = new Player(na, nu);
+        const tn = formatTurnOrder(t);
+        player.setTurnOrder(tn);
+        if (tn > 0) {
+            turnOrderArray[tn - 1] = player;
+        }
+        return player;
+    };
 
     React.useEffect(() => {
+        const currentGameText = localStorage.getItem('currentGame');
+        if (currentGameText) {
+            const g = JSON.parse(currentGameText);
+            const realGame = new Lobby(g.name, g.max);
+            realGame.players = Array.isArray(g.players)
+                ? g.players.map(p => p ? rehydrate(p.name, p.num, p.turnOrder) : null)
+                : new Array(g.max).fill(null);
+            realGame.playerCount = g.playerCount;
+
+            onGameChange(realGame);
+        }
+    }, []);
+
+    /*React.useEffect(() => {
         const currentGameText = localStorage.getItem('currentGame');
         if (currentGameText) {
             const g = JSON.parse(currentGameText);
@@ -24,7 +72,7 @@ export function Game({ userName, currentGame, onGameChange }) {
 
             onGameChange(realGame);
         }
-    }, []);
+    }, [])*/
 
     if (!currentGame) {
         return (
@@ -36,15 +84,36 @@ export function Game({ userName, currentGame, onGameChange }) {
         )
     }
 
-    const changeTime = (newTime) => {setTime(newTime)}
+    const changeTime = (newTime) => { setTime(newTime) }
 
-    
+
     const playerArray = [];
     let user = new Player(null, null);
     let color = null;
     let gameStart = false;
+    let playerDisplay = <PlayerDisplay orderArray={turnOrderArray} playerArray ={playerArray}/>;
     let currentPlayer = null;
     let nextPlayer = null;
+
+    React.useEffect(() => {
+        playerDisplay = <PlayerDisplay orderArray={turnOrderArray} playerArray = {playerArray}/>;
+    }, [turnOrderArray, playerArray])
+
+    const isAvailable = (t) => {
+        if (turnOrderArray[t-1]) {
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    const setTurnOrder = (p, t) => {
+        if (isAvailable(t)) {
+            p.setTurnOrder(t);
+            turnOrderArray[t - 1] = p;
+        }
+    }
 
     //Placeholder Code for testing
     if (currentGame && Array.isArray(currentGame.players)) {
@@ -56,14 +125,39 @@ export function Game({ userName, currentGame, onGameChange }) {
         }
         user = playerArray.find(obj => obj.name === userName);
         color = user.formatPlayerNum()
+        /*let turnOrder = 1; 
+        for (const player of playerArray){
+            if (user.name !== player.name){
+                setTurnOrder(player, turnOrder)
+                turnOrder++;
+                if (turnOrder ==2){
+                    turnOrder++;
+                }
+            }
+        }*/
+         
     }
     //End of Placeholder
 
+    
 
 
-    const displayAll = (a) => {
-        const out = []
+
+    const displayAll = (a, b) => {
+        const result = []
         for (const obj of a) {
+            if (obj) {
+                result.push(obj);
+            } 
+        }
+        for (const obj of b){
+            const isInArray = result.some(p => p.name === obj.name);
+            if (!isInArray){
+                result.push(obj);
+            }
+        }
+        const out = [];
+        for (const obj of result){
             out.push(obj.display());
         }
         return out;
@@ -72,7 +166,6 @@ export function Game({ userName, currentGame, onGameChange }) {
     const startGame = () => {
 
     }
-
 
     return (
         <main id="gameState" className="container-fluid bg-body">
@@ -94,19 +187,7 @@ export function Game({ userName, currentGame, onGameChange }) {
             <div className="game h3 my-4 text-center">
                 Game: <span id="game-title" style={{ fontFamily: 'Roboto' }}>Terraforming Mars</span>
             </div>
-            <table className="table table-striped-columns table-body">
-                <thead>
-                    <tr>
-
-                        <th>Name</th>
-                        <th>Turn Order</th>
-                        <th>Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {displayAll(playerArray)}
-                </tbody>
-            </table>
+            {playerDisplay}
 
             <br />
             <br />
@@ -128,11 +209,10 @@ export function Game({ userName, currentGame, onGameChange }) {
                     >
                         {gameStart ? 'End Turn' : 'Start Game'}
                     </Button>
-                    <Button className="Button"
-                        variant='success'
-                        size='sm'
-                        onClick={() => null}
-                    >Set Turn Order</Button>
+                    <TurnChanger onChange={(t) => {
+                        setTurnOrder(user, t);
+                        refresh(refcount+1);
+                        }} checker={(t) => isAvailable(t)}/>
                 </div>
 
                 <TimeChanger time={time} onSubmit={(i) => changeTime(i)} />

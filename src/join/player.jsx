@@ -21,7 +21,7 @@ export class Player {
             return "player-two";
         }
         if (this.num === 3) {
-            return "player-three"
+            return "player-three";
         }
         if (this.num === 4) {
             return "player-four";
@@ -29,7 +29,21 @@ export class Player {
     }
 
     setTurnOrder(turnOrder){
-        this.turnOrder = turnOrder;
+        let result = ""; 
+
+        if (turnOrder === 1 || turnOrder === "1st"){
+            result = "1st";
+        }
+        if (turnOrder === 2 || turnOrder === "2nd"){
+            result = "2nd";
+        }
+        if (turnOrder === 3 || turnOrder === "3rd") {
+            result = "3rd";
+        }
+        if (turnOrder === 4 || turnOrder === "4th") {
+            result = "4th";
+        }
+        this.turnOrder = result;
     }
 
     setTime(time){

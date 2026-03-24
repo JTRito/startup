@@ -41,6 +41,10 @@ export function Join({ userName, onGameChange}) {
     game.joinGame("Jacob");
     game.joinGame("John");
 
+    game.players.find(player => player.name === "Luke").setTurnOrder(1);
+    game.players.find(player => player.name === "Jacob").setTurnOrder(2);
+    game.players.find(player => player.name === "John").setTurnOrder(4);
+
     const newGamesList = [...games, game];
     setGames(newGamesList);
 

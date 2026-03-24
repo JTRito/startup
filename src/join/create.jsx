@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
 
 
 export function Create(props) {
@@ -10,7 +10,7 @@ export function Create(props) {
 
     async function setGame() {
         localStorage.setItem('gameName', gameName);
-        localStorage.setItem('playerCount', playerCount)
+        localStorage.setItem('playerCount', playerCount);
         props.onCreate(gameName, playerCount);
     }
 

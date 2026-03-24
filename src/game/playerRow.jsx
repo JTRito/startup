@@ -2,8 +2,8 @@ import React from 'react';
 import { Timer } from './timer';
 
 export function PlayerRow(props) {
-    
-    const {playerName, activePlayer, turnOrder, time, playerNum} = props;
+
+    const {playerName, activePlayer, time, num, turnOrder} = props;
 
     const formatPlayerNum = (i) => {
         if (i === 1) {
@@ -13,7 +13,7 @@ export function PlayerRow(props) {
             return "player-two";
         }
         if (i === 3) {
-            return "player-three"
+            return "player-three";
         }
         if (i === 4) {
             return "player-four";
@@ -24,13 +24,13 @@ export function PlayerRow(props) {
         <>
             {activePlayer ?
                 <tr>
-                    <td className={formatPlayerNum(playerNum)} > <b>{playerName.split('@')[0]}</b></td >
+                    <td className={formatPlayerNum(num)} > <b>{playerName.split('@')[0]}</b></td >
                     <td><b>{turnOrder}</b></td>
                     <Timer seconds={time} isActive={activePlayer} />
                 </tr>
                 :
                 <tr>
-                    <td className={formatPlayerNum(playerNum)}> {playerName.split('@')[0]}</td>
+                    <td className={formatPlayerNum(num)}> {playerName.split('@')[0]}</td>
                     <td>{turnOrder}</td>
                     <Timer seconds={time} isActive={activePlayer} />
                 </tr>
