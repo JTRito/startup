@@ -62,15 +62,15 @@ export function Join({ userName, onGameChange }) {
       body: JSON.stringify(newGame),
     });
     if (response?.status === 200 || response?.status === 204) {
-      onGameChange(newGame);
-      navigate('/game');
+      const updatedGames = await response.json(); 
+      setGames(updatedGames);
     }
   }
 
   const gameRows = [];
   if (games.length) {
     for (const [i, game] of games.entries()) {
-      const max = game.max;
+      const max = game.playerCount;
       const players = game.players;
       const playerDisplay = [];
       const name = game.name;

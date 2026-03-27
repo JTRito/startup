@@ -90,7 +90,7 @@ app.use((_req, res) => {
 });
 
 function updateGames(newGame) {
-    const lobby = {name : newGame.name, playerCount: newGame.playerCount, id : gameID, players:[]};
+    const lobby = {name : newGame.name, playerCount: newGame.playerCount, id : gameID, players: new Array(newGame.playerCount)};
     games.push(lobby);
     gameID += 1;
     return games;
