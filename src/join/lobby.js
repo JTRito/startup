@@ -2,9 +2,10 @@ import { Player } from "./player"
 
 export class Lobby {
 
-    constructor(name, max) {
+    constructor(name, max, id) {
         this.name = name;
         this.max = max;
+        this.id = id;
         this.players = new Array(max);
         this.playerCount = 0;
     }

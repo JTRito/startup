@@ -1,5 +1,4 @@
-import { PlayerRow } from "../game/playerRow";
-import React from "react";
+
 export class Player {
     constructor(name, num) {
         this.name = name;
@@ -48,9 +47,5 @@ export class Player {
 
     setTime(time){
         this.time = time;
-    }
-
-    display() {
-        return (<PlayerRow key={this.name} playerName={this.name} activePlayer={this.active} turnOrder={this.turnOrder} time={this.time} num={this.num}/>)
     }
 }

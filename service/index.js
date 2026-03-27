@@ -1,3 +1,4 @@
+
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const express = require('express');
@@ -8,6 +9,7 @@ const authCookieName = 'token';
 
 let users = [];
 let games = [];
+let gameID = 0;
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -25,7 +27,6 @@ apiRouter.post('/auth/create', async (req, res) => {
     res.status(409).send({ msg: 'Existing user' });
   } else {
     const user = await createUser(req.body.email, req.body.password);
-
     setAuthCookie(res, user.token);
     res.send({ email: user.email });
   }
@@ -71,6 +72,15 @@ apiRouter.post('/game', verifyAuth, (req, res) => {
   res.send(games);
 });
 
+apiRouter.put('/game/:gameID', verifyAuth, (req, res) => {
+    
+})
+
+apiRouter.delete('/games/reset', verifyAuth, (req, res) => {
+    games = resetGames();
+    res.send(games);
+})
+
 app.use(function (err, req, res, next) {
   res.status(500).send({ type: err.name, message: err.message });
 });
@@ -80,8 +90,15 @@ app.use((_req, res) => {
 });
 
 function updateGames(newGame) {
-    games.push(newGame);
+    const lobby = {name : newGame.name, playerCount: newGame.playerCount, id : gameID, players:[]};
+    games.push(lobby);
+    gameID += 1;
+    return games;
+}
 
+function resetGames(){
+    games = [];
+    
     return games;
 }
 
@@ -101,7 +118,7 @@ async function createUser(email, password) {
 async function findUser(field, value) {
     if (!value) return null;
 
-    return users.find((u))
+    return users.find((u) => u[field] === value);
 }
 
 function setAuthCookie(res, authToken) {
