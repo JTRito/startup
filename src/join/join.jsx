@@ -34,15 +34,19 @@ export function Join({ userName, onGameChange }) {
   }
 
   async function joinCurrentGame(game) {
-    const response = await fetch('', {
-      method: 'post',
-      body: JSON.stringify({ email: userName, password: password }),
+    const response = await fetch(`/api/game/${game.id}`, {
+      method: 'put',
+      body: JSON.stringify({ player: userName }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
-    });
+    })
+    if (response?.status === 200 || response?.status === 204) {
+      const updatedGames = await response.json(); 
+      setGames(updatedGames);
+    };
 
-    const updatedGames = [...games];
+    /*const updatedGames = [...games];
     setGames(updatedGames);
 
     localStorage.setItem('games', JSON.stringify(updatedGames));
@@ -50,7 +54,7 @@ export function Join({ userName, onGameChange }) {
 
     onGameChange(game);
 
-    navigate('/game');
+    navigate('/game');*/
   }
 
   async function createGame(gameName, playerCount) {
@@ -70,14 +74,14 @@ export function Join({ userName, onGameChange }) {
   const gameRows = [];
   if (games.length) {
     for (const [i, game] of games.entries()) {
-      const max = game.playerCount;
+      const max = game.max;
       const players = game.players;
       const playerDisplay = [];
       const name = game.name;
 
       for (let j = 0; j < 4; j++) {
         if (j < max) {
-          playerDisplay.push(players[j] ? <td key={j}>{players[j].name.split('@')[0]}</td> : <Open key={j} />);
+          playerDisplay.push(players[j] ? <td key={j}>{players[j].split('@')[0]}</td> : <Open key={j} />);
         }
         else {
           playerDisplay.push(<td key={j}></td>);

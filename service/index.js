@@ -23,58 +23,66 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 apiRouter.post('/auth/create', async (req, res) => {
-  if (await findUser('email', req.body.email)) {
-    res.status(409).send({ msg: 'Existing user' });
-  } else {
-    const user = await createUser(req.body.email, req.body.password);
-    setAuthCookie(res, user.token);
-    res.send({ email: user.email });
-  }
+    if (await findUser('email', req.body.email)) {
+        res.status(409).send({ msg: 'Existing user' });
+    } else {
+        const user = await createUser(req.body.email, req.body.password);
+        setAuthCookie(res, user.token);
+        res.send({ email: user.email });
+    }
 });
 
 apiRouter.post('/auth/login', async (req, res) => {
-  const user = await findUser('email', req.body.email);
-  if (user) {
-    if (await bcrypt.compare(req.body.password, user.password)) {
-      user.token = uuid.v4();
-      setAuthCookie(res, user.token);
-      res.send({ email: user.email });
-      return;
+    const user = await findUser('email', req.body.email);
+    if (user) {
+        if (await bcrypt.compare(req.body.password, user.password)) {
+            user.token = uuid.v4();
+            setAuthCookie(res, user.token);
+            res.send({ email: user.email });
+            return;
+        }
     }
-  }
-  res.status(401).send({ msg: 'Unauthorized' });
+    res.status(401).send({ msg: 'Unauthorized' });
 });
 
 apiRouter.delete('/auth/logout', async (req, res) => {
-  const user = await findUser('token', req.cookies[authCookieName]);
-  if (user) {
-    delete user.token;
-  }
-  res.clearCookie(authCookieName);
-  res.status(204).end();
+    const user = await findUser('token', req.cookies[authCookieName]);
+    if (user) {
+        delete user.token;
+    }
+    res.clearCookie(authCookieName);
+    res.status(204).end();
 });
 
 const verifyAuth = async (req, res, next) => {
-  const user = await findUser('token', req.cookies[authCookieName]);
-  if (user) {
-    next();
-  } else {
-    res.status(401).send({ msg: 'Unauthorized' });
-  }
+    const user = await findUser('token', req.cookies[authCookieName]);
+    if (user) {
+        next();
+    } else {
+        res.status(401).send({ msg: 'Unauthorized' });
+    }
 };
 
 apiRouter.get('/games', verifyAuth, (_req, res) => {
-  res.send(games);
+    res.send(games);
 });
 
 apiRouter.post('/game', verifyAuth, (req, res) => {
-  games = updateGames(req.body);
-  res.send(games);
+    games = updateGames(req.body);
+    res.send(games);
 });
 
-apiRouter.put('/game/:gameID', verifyAuth, (req, res) => {
-    
-})
+//Join game endpoint
+apiRouter.put('/game/:id', verifyAuth, (req, res) => {
+    const id = req.params.id;
+    const game = findGame(id);
+    if (game) {
+        games = joinGame(id, req.body.player)
+        res.send(games);
+    } else{
+        res.status(404).send({ msg: 'Game not found' });
+    }
+});
 
 apiRouter.delete('/games/reset', verifyAuth, (req, res) => {
     games = resetGames();
@@ -82,23 +90,23 @@ apiRouter.delete('/games/reset', verifyAuth, (req, res) => {
 })
 
 app.use(function (err, req, res, next) {
-  res.status(500).send({ type: err.name, message: err.message });
+    res.status(500).send({ type: err.name, message: err.message });
 });
 
 app.use((_req, res) => {
-  res.sendFile('index.html', { root: 'public' });
+    res.sendFile('index.html', { root: 'public' });
 });
 
 function updateGames(newGame) {
-    const lobby = {name : newGame.name, playerCount: newGame.playerCount, id : gameID, players: new Array(newGame.playerCount)};
+    const lobby = { name: newGame.name, max: newGame.playerCount, id: gameID, players: new Array(Number(newGame.playerCount)), playerCount : 0};
     games.push(lobby);
     gameID += 1;
     return games;
 }
 
-function resetGames(){
+function resetGames() {
     games = [];
-    
+
     return games;
 }
 
@@ -119,6 +127,23 @@ async function findUser(field, value) {
     if (!value) return null;
 
     return users.find((u) => u[field] === value);
+}
+
+async function findGame(id) {
+    if (!id) return null;
+
+    return games.find((g) => g['id'] === id);
+}
+
+function joinGame(id, player) {
+    const game =  games.find((g) => g.id === Number(id));
+
+    if (game?.playerCount < game?.max) {
+        game.players[game.playerCount] = player;
+        game.playerCount += 1;
+    }
+
+    return games;
 }
 
 function setAuthCookie(res, authToken) {
