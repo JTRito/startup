@@ -49,3 +49,11 @@ function getGames(){
     const cursor = gameCollection.find({});
     return cursor.toArray()
 }
+
+module.exports = {
+  getUser,
+  getUserByToken,
+  addUser,
+  updateUser,
+  updateUserRemoveAuth,
+};
