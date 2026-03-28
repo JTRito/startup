@@ -127,8 +127,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Stores data in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
+- [X] **Stores data in MongoDB** - Current active games and the names of players within those games are stored within MongoDB. Due to severe functionality bugs relating to the storage and setting of turn order and the storage of the game the user is currently in, not all of the planned functionality has been implemented yet. 
+- [X] **Stores credentials in MongoDB** - All user credentials are stored within MongoDB after account creation. 
 
 ## 🚀 WebSocket deliverable
 
