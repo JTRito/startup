@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb');
+const { ObjectId } = require('mongodb');
 const config = require('./dbConfig.json');
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
@@ -42,12 +43,22 @@ async function addGame(game) {
 }
 
 async function resetGames() {
-    await gameCollection.deleteMany({})
+    await gameCollection.deleteMany({});
 }
 
 function getGames(){
     const cursor = gameCollection.find({});
-    return cursor.toArray()
+    return cursor.toArray();
+}
+
+function getGame(id){
+    return gameCollection.findOne({ _id: new ObjectId(id)});
+}
+
+async function joinGame(game, user){
+    game.players[game.playerCount] = user.email;
+    game.playerCount += 1;
+    await gameCollection.updateOne ({ _id: new ObjectId(game._id) }, {$set: game});
 }
 
 module.exports = {
@@ -56,4 +67,9 @@ module.exports = {
   addUser,
   updateUser,
   updateUserRemoveAuth,
+  addGame,
+  resetGames,
+  getGames,
+  getGame,
+  joinGame,
 };

@@ -65,21 +65,23 @@ const verifyAuth = async (req, res, next) => {
     }
 };
 
-apiRouter.get('/games', verifyAuth, (_req, res) => {
+apiRouter.get('/games', verifyAuth, async (_req, res) => {
+    const games = await DB.getGames();
     res.send(games);
 });
 
-apiRouter.post('/game', verifyAuth, (req, res) => {
-    games = updateGames(req.body);
+apiRouter.post('/game', verifyAuth, async (req, res) => {
+    const games = await updateGames(req.body);
     res.send(games);
 });
 
 //Join game endpoint
-apiRouter.put('/game/:id', verifyAuth, (req, res) => {
+apiRouter.put('/game/:id', verifyAuth, async (req, res) => {
     const id = req.params.id;
-    const game = findGame(id);
+    const game = await findGame(id);
     if (game) {
-        games = joinGame(id, req.body.player)
+        const user = await DB.getUser(req.body.player) 
+        const games = await joinGame(game, user)
         res.send(games);
     } else{
         res.status(404).send({ msg: 'Game not found' });
@@ -99,17 +101,14 @@ app.use((_req, res) => {
     res.sendFile('index.html', { root: 'public' });
 });
 
-function updateGames(newGame) {
-    const lobby = { name: newGame.name, max: newGame.playerCount, id: gameID, players: new Array(Number(newGame.playerCount)), playerCount : 0};
-    games.push(lobby);
-    gameID += 1;
-    return games;
+async function updateGames(newGame) {
+    const lobby = { name: newGame.name, max: newGame.playerCount, players: new Array(Number(newGame.playerCount)), playerCount : 0};
+    await DB.addGame(lobby);
+    return DB.getGames();
 }
 
-function resetGames() {
-    games = [];
-
-    return games;
+async function resetGames() {
+    await DB.resetGames();
 }
 
 async function createUser(email, password) {
@@ -137,17 +136,15 @@ async function findUser(field, value) {
 async function findGame(id) {
     if (!id) return null;
 
-    return games.find((g) => g['id'] === id);
+    return DB.getGame(id);
 }
 
-function joinGame(id, player) {
-    const game =  games.find((g) => g.id === Number(id));
-
+async function joinGame(game, player) {
     if (game?.playerCount < game?.max) {
-        game.players[game.playerCount] = player;
-        game.playerCount += 1;
+        await DB.joinGame(game, player);
     }
-
+    
+    const games = await DB.getGames();
     return games;
 }
 

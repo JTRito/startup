@@ -34,7 +34,7 @@ export function Join({ userName, onGameChange }) {
   }
 
   async function joinCurrentGame(game) {
-    const response = await fetch(`/api/game/${game.id}`, {
+    const response = await fetch(`/api/game/${game._id}`, {
       method: 'put',
       body: JSON.stringify({ player: userName }),
       headers: {
@@ -129,9 +129,6 @@ export function Join({ userName, onGameChange }) {
           {gameRows}
         </tbody>
       </table>
-      <Button className="button" variant='danger' onClick={() => resetGames()}>
-        Remove All Games(This is a placeholder)
-      </Button>
     </main>
   );
 }
