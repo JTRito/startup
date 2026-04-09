@@ -16,7 +16,7 @@ export function Game({ userName, currentGame, onGameChange }) {
     const [time, setTime] = React.useState((60 * 5));
     const [refcount, refresh] = React.useState(0);
 
-    let turnOrderArray = new Array(4)
+    let turnOrderArray = currentGame.turnOrderArray;
 
     const formatTurnOrder = (t) => {
         let result = 0;
@@ -52,6 +52,7 @@ export function Game({ userName, currentGame, onGameChange }) {
         if (currentGameText) {
             const g = JSON.parse(currentGameText);
             const realGame = new Lobby(g.name, g.max);
+            realGame.setTurnOrderArray(g.turnOrderArray);
             realGame.players = Array.isArray(g.players)
                 ? g.players.map(p => p ? rehydrate(p.name, p.num, p.turnOrder) : null)
                 : new Array(g.max).fill(null);

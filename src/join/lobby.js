@@ -8,6 +8,7 @@ export class Lobby {
         this.id = id;
         this.players = new Array(max);
         this.playerCount = 0;
+        this.turnOrderArray = new Array(max);
     }
 
     joinGame(userName) {
@@ -24,5 +25,9 @@ export class Lobby {
                 console.log("failed to set time for a player")
             }
         }
+    }
+
+    setTurnOrderArray(turnOrderArray){
+        this.turnOrderArray = turnOrderArray;
     }
 }
