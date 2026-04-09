@@ -4,6 +4,7 @@ import { GameEvent, GameNotifier } from './gameNotifier';
 
 export function Notifications(props) {
     const userName = props.userName;
+    const color = props.color;
 
     const [events, setEvent] = React.useState([]);
 
@@ -51,9 +52,8 @@ export function Notifications(props) {
     }
 
     return (
-        <div className='players'>
-            Player
-            <span className='player-name'>{userName}</span>
+        <div className='players text-start'>
+            <div className = 'current-player'>Player:<span className={color}>{userName}</span></div>
             <div id='player-messages'>{createMessageArray()}</div>
         </div>
     )

@@ -42,19 +42,25 @@ export function Join({ userName, onGameChange }) {
       },
     })
     if (response?.status === 200 || response?.status === 204) {
-      const updatedGames = await response.json(); 
+      const updatedGames = await response.json();
       setGames(updatedGames);
+      localStorage.setItem('games', JSON.stringify(updatedGames));
+
+      const gameResponse = await fetch(`/api/game/${game._id}`, {
+        method: 'get',
+        headers: {
+          'Content-type' : 'application/json; charset=UTF-8',
+        },
+      })
+      if (gameResponse?.status === 200 || gameResponse?.status === 204) {
+        const newGame = await gameResponse.json();
+        localStorage.setItem('currentGame', JSON.stringify(newGame));
+      }
+
+      onGameChange(game);
+
+      navigate('/game');
     };
-
-    /*const updatedGames = [...games];
-    setGames(updatedGames);
-
-    localStorage.setItem('games', JSON.stringify(updatedGames));
-    localStorage.setItem('currentGame', JSON.stringify(game))
-
-    onGameChange(game);
-
-    navigate('/game');*/
   }
 
   async function createGame(gameName, playerCount) {
@@ -66,7 +72,7 @@ export function Join({ userName, onGameChange }) {
       body: JSON.stringify(newGame),
     });
     if (response?.status === 200 || response?.status === 204) {
-      const updatedGames = await response.json(); 
+      const updatedGames = await response.json();
       setGames(updatedGames);
     }
   }
@@ -80,8 +86,9 @@ export function Join({ userName, onGameChange }) {
       const name = game.name;
 
       for (let j = 0; j < 4; j++) {
+        const playerName = players[j] ? players[j].name : null;
         if (j < max) {
-          playerDisplay.push(players[j] ? <td key={j}>{players[j].split('@')[0]}</td> : <Open key={j} />);
+          playerDisplay.push(players[j] ? <td key={j}>{playerName.split('@')[0]}</td> : <Open key={j} />);
         }
         else {
           playerDisplay.push(<td key={j}></td>);

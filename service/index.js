@@ -10,7 +10,6 @@ const { peerProxy } = require('./peerProxy.js');
 const authCookieName = 'token';
 
 let games = [];
-let gameID = 0;
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -81,13 +80,24 @@ apiRouter.put('/game/:id', verifyAuth, async (req, res) => {
     const id = req.params.id;
     const game = await findGame(id);
     if (game) {
-        const user = await DB.getUser(req.body.player) 
-        const games = await joinGame(game, user)
+        const user = await DB.getUser(req.body.player);
+        const games = await joinGame(game, user);
         res.send(games);
     } else{
         res.status(404).send({ msg: 'Game not found' });
     }
 });
+
+//Get current game endpoint
+apiRouter.get('/game/:id', verifyAuth, async (req, res) => {
+    const id = req.params.id;
+    const game = await findGame(id);
+    if (game) {
+        res.send(game);
+    } else {
+        res.status(404).send({ msg: 'Game not found' });
+    }
+})
 
 apiRouter.delete('/games/reset', verifyAuth, (req, res) => {
     games = resetGames();

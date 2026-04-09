@@ -56,9 +56,14 @@ function getGame(id){
 }
 
 async function joinGame(game, user){
-    game.players[game.playerCount] = user.email;
+    const player = {
+        name : user.email,
+        num : game.playerCount + 1
+    }
+    game.players[game.playerCount] = player;
     game.playerCount += 1;
-    await gameCollection.updateOne ({ _id: new ObjectId(game._id) }, {$set: game});
+    await gameCollection.updateOne({ _id: new ObjectId(game._id) }, {$set: game});
+    await userCollection.updateOne({ email: user.email }, { $set: { game: new ObjectId(game._id)}})
 }
 
 module.exports = {

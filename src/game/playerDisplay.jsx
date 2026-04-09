@@ -1,4 +1,5 @@
 import React from "react";
+import { PlayerRow } from "./playerRow";
 
 export function PlayerDisplay({ orderArray, playerArray }) {
     const displayAll = (a, b) => {
@@ -16,11 +17,21 @@ export function PlayerDisplay({ orderArray, playerArray }) {
         }
         const out = [];
         for (const obj of result) {
-            out.push(obj.display());
+            out.push(display(obj));
         }
         return out;
-    }
+    };
 
+    const display = (i) => {
+        return (<PlayerRow
+            key={i.num}
+            playerName={i.name} 
+            activePlayer={i.active} 
+            time={i.time}
+            num={i.num} 
+            turnOrder={i.turnOrder}
+        />)
+    }
 
     return (
         <table className="table table-striped-columns table-body">

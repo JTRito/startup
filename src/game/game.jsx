@@ -9,12 +9,13 @@ import Button from 'react-bootstrap/Button'
 import { TimeChanger } from './timeChanger';
 import { TurnChanger } from './turnChanger';
 import { PlayerDisplay } from './playerDisplay';
+import { Notifications } from './notifications';
 
 export function Game({ userName, currentGame, onGameChange }) {
 
     const [time, setTime] = React.useState((60 * 5));
     const [refcount, refresh] = React.useState(0);
-     
+
     let turnOrderArray = new Array(4)
 
     const formatTurnOrder = (t) => {
@@ -91,19 +92,14 @@ export function Game({ userName, currentGame, onGameChange }) {
     let user = new Player(null, null);
     let color = null;
     let gameStart = false;
-    let playerDisplay = <PlayerDisplay orderArray={turnOrderArray} playerArray ={playerArray}/>;
     let currentPlayer = null;
     let nextPlayer = null;
 
-    React.useEffect(() => {
-        playerDisplay = <PlayerDisplay orderArray={turnOrderArray} playerArray = {playerArray}/>;
-    }, [turnOrderArray, playerArray])
-
     const isAvailable = (t) => {
-        if (turnOrderArray[t-1]) {
+        if (turnOrderArray[t - 1]) {
             return false;
         }
-        else{
+        else {
             return true;
         }
     }
@@ -124,7 +120,7 @@ export function Game({ userName, currentGame, onGameChange }) {
             }
         }
         user = playerArray.find(obj => obj.name === userName);
-        color = user.formatPlayerNum()
+        color = user ? user.formatPlayerNum() : null;
         /*let turnOrder = 1; 
         for (const player of playerArray){
             if (user.name !== player.name){
@@ -135,11 +131,11 @@ export function Game({ userName, currentGame, onGameChange }) {
                 }
             }
         }*/
-         
+
     }
     //End of Placeholder
 
-    
+
 
 
 
@@ -148,16 +144,16 @@ export function Game({ userName, currentGame, onGameChange }) {
         for (const obj of a) {
             if (obj) {
                 result.push(obj);
-            } 
+            }
         }
-        for (const obj of b){
+        for (const obj of b) {
             const isInArray = result.some(p => p.name === obj.name);
-            if (!isInArray){
+            if (!isInArray) {
                 result.push(obj);
             }
         }
         const out = [];
-        for (const obj of result){
+        for (const obj of result) {
             out.push(obj.display());
         }
         return out;
@@ -169,25 +165,11 @@ export function Game({ userName, currentGame, onGameChange }) {
 
     return (
         <main id="gameState" className="container-fluid bg-body">
-            <div className="d-flex justify-content-start pt-3">
-                <div className="players text-start">
-                    <span className="current-player d-block">
-                        Player:
-                        <span className={color}>{userName.split('@')[0]}</span>
-                    </span>
-
-                    <ul className="notification list-unstyled mb-0">
-                        <li className="turn-notification"><b>It's your turn!</b></li>
-                        <li className="pass-notification"><span className="player-four">John</span> finished his turn.</li>
-                        <li className="pass-notification"><span className="player-three">Jacob</span> finished his turn.</li>
-                        <li className="time-notification"><span className="player-two">Luke's</span> time is up!</li>
-                    </ul>
-                </div>
-            </div>
+            <Notifications userName={userName.split('@')[0]} color={color} />
             <div className="game h3 my-4 text-center">
                 Game: <span id="game-title" style={{ fontFamily: 'Roboto' }}>Terraforming Mars</span>
             </div>
-            {playerDisplay}
+            <PlayerDisplay orderArray={turnOrderArray} playerArray={playerArray} />
 
             <br />
             <br />
@@ -211,8 +193,8 @@ export function Game({ userName, currentGame, onGameChange }) {
                     </Button>
                     <TurnChanger onChange={(t) => {
                         setTurnOrder(user, t);
-                        refresh(refcount+1);
-                        }} checker={(t) => isAvailable(t)}/>
+                        refresh(refcount + 1);
+                    }} checker={(t) => isAvailable(t)} />
                 </div>
 
                 <TimeChanger time={time} onSubmit={(i) => changeTime(i)} />
