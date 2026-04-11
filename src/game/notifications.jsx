@@ -26,6 +26,8 @@ export function Notifications(props) {
             let message = 'unknown';
             if (event.type === GameEvent.Pass) {
                 message = `ended their turn`;
+            } else if (event.type === GameEvent.Join) {
+                message = `joined the game`;
             } else if (event.type === GameEvent.Time) {
                 message = `is out of time`;
             } else if (event.type === GameEvent.System) {
@@ -39,7 +41,7 @@ export function Notifications(props) {
                 );
             }
 
-            if (event.type !== GameEvent.Turn){
+            if (event.type !== GameEvent.Turn) {
                 messageArray.push(
                     <div key={i} className='event'>
                         <span className={'player-event'}>{event.from.split('@')[0]}</span>
@@ -53,7 +55,7 @@ export function Notifications(props) {
 
     return (
         <div className='players text-start'>
-            <div className = 'current-player'>Player:<span className={color}>{userName}</span></div>
+            <div className='current-player'>Player:<span className={color}>{userName}</span></div>
             <div id='player-messages'>{createMessageArray()}</div>
         </div>
     )

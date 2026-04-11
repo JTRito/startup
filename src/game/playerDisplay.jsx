@@ -1,15 +1,10 @@
 import React from "react";
 import { PlayerRow } from "./playerRow";
 
-export function PlayerDisplay({ orderArray, playerArray }) {
-    const displayAll = (a, b) => {
+export function PlayerDisplay({ playerArray }) {
+    const displayAll = (players) => {
         const result = []
-        for (const obj of a) {
-            if (obj) {
-                result.push(obj);
-            }
-        }
-        for (const obj of b) {
+        for (const obj of players) {
             const isInArray = result.some(p => p.name === obj.name);
             if (!isInArray) {
                 result.push(obj);
@@ -25,10 +20,10 @@ export function PlayerDisplay({ orderArray, playerArray }) {
     const display = (i) => {
         return (<PlayerRow
             key={i.num}
-            playerName={i.name} 
-            activePlayer={i.active} 
+            playerName={i.name}
+            activePlayer={i.active}
             time={i.time}
-            num={i.num} 
+            num={i.num}
             turnOrder={i.turnOrder}
         />)
     }
@@ -44,7 +39,7 @@ export function PlayerDisplay({ orderArray, playerArray }) {
                 </tr>
             </thead>
             <tbody>
-                {displayAll(orderArray, playerArray)}
+                {displayAll(playerArray)}
             </tbody>
         </table>
     )

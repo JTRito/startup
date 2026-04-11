@@ -3,6 +3,7 @@ const GameEvent = {
     Pass: 'pass',
     Turn: 'turn',
     Time: 'time',
+    Join: 'join',
 };
 
 class EventMessage {

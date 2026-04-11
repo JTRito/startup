@@ -13,7 +13,9 @@ export default function App() {
     const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
     const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = React.useState(currentAuthState);
-    const [currentGame, setCurrentGame] = React.useState(localStorage.getItem('currentGame'));
+    const [currentGame, setCurrentGame] = React.useState(
+        JSON.parse(localStorage.getItem('currentGame')) || null
+    );
 
     return <BrowserRouter>
         <div className="body bg-light text-dark">

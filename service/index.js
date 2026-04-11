@@ -113,7 +113,7 @@ app.use((_req, res) => {
 });
 
 async function updateGames(newGame) {
-    const lobby = { name: newGame.name, max: newGame.playerCount, players: new Array(Number(newGame.playerCount)), playerCount : 0};
+    const lobby = { name: newGame.name, max: newGame.max, players: new Array(Number(newGame.max)), playerCount : newGame.playerCount,  turnOrderArray : newGame.turnOrderArray};
     await DB.addGame(lobby);
     return DB.getGames();
 }

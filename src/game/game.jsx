@@ -52,11 +52,20 @@ export function Game({ userName, currentGame, onGameChange }) {
         if (currentGameText) {
             const g = JSON.parse(currentGameText);
             const realGame = new Lobby(g.name, g.max);
-            realGame.setTurnOrderArray(g.turnOrderArray);
             realGame.players = Array.isArray(g.players)
-                ? g.players.map(p => p ? rehydrate(p.name, p.num, p.turnOrder) : null)
+                ? g.players.map(p => {
+                    if (p) {
+                        const newP = new Player(p.name, p.num);
+
+                        return newP;
+                    }
+                    return null;
+                })
                 : new Array(g.max).fill(null);
+
             realGame.playerCount = g.playerCount;
+            realGame.turnOrderArray = g.turnOrderArray || [null, null, null, null];
+
 
             onGameChange(realGame);
         }
@@ -112,29 +121,16 @@ export function Game({ userName, currentGame, onGameChange }) {
         }
     }
 
-    //Placeholder Code for testing
     if (currentGame && Array.isArray(currentGame.players)) {
         for (const player of currentGame.players) {
-            if (player) {
+            if (player && typeof player.setTime === 'function') {
                 player.setTime(time);
+                playerArray.push(player);
+            } else if (player) {
                 playerArray.push(player);
             }
         }
-        user = playerArray.find(obj => obj.name === userName);
-        color = user ? user.formatPlayerNum() : null;
-        /*let turnOrder = 1; 
-        for (const player of playerArray){
-            if (user.name !== player.name){
-                setTurnOrder(player, turnOrder)
-                turnOrder++;
-                if (turnOrder ==2){
-                    turnOrder++;
-                }
-            }
-        }*/
-
     }
-    //End of Placeholder
 
 
 
@@ -170,7 +166,7 @@ export function Game({ userName, currentGame, onGameChange }) {
             <div className="game h3 my-4 text-center">
                 Game: <span id="game-title" style={{ fontFamily: 'Roboto' }}>Terraforming Mars</span>
             </div>
-            <PlayerDisplay orderArray={turnOrderArray} playerArray={playerArray} />
+            <PlayerDisplay playerArray={playerArray} />
 
             <br />
             <br />

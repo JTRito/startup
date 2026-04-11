@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button'
 import { Create } from './create';
 import { Player } from './player';
 import { Open } from './open';
-
+import { GameEvent, GameNotifier } from '../game/gameNotifier';
 export function Join({ userName, onGameChange }) {
   const [games, setGames] = React.useState([]);
   const navigate = useNavigate();
@@ -49,22 +49,23 @@ export function Join({ userName, onGameChange }) {
       const gameResponse = await fetch(`/api/game/${game._id}`, {
         method: 'get',
         headers: {
-          'Content-type' : 'application/json; charset=UTF-8',
+          'Content-type': 'application/json; charset=UTF-8',
         },
       })
       if (gameResponse?.status === 200 || gameResponse?.status === 204) {
         const newGame = await gameResponse.json();
         localStorage.setItem('currentGame', JSON.stringify(newGame));
+        onGameChange(game);
+        GameNotifier.broadcastEvent(userName, GameEvent.Join, 0);
+        navigate('/game');
       }
 
-      onGameChange(game);
 
-      navigate('/game');
     };
   }
 
   async function createGame(gameName, playerCount) {
-    const newGame = { name: gameName, playerCount: playerCount };
+    const newGame = new Lobby(gameName, playerCount, 0);
 
     const response = await fetch('/api/game', {
       method: 'POST',
